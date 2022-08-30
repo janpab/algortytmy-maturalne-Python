@@ -41,6 +41,7 @@ def fib(a):
 
 #liczba doskonała to liczba ktora jest sumą wszystkkich swouch dzielników właściwych
 from math import sqrt
+from re import I
 def liczba_doskonala(a):
     suma = 0
     for i in range(1, int(sqrt(a))+1):
@@ -53,7 +54,31 @@ def liczba_doskonala(a):
 def czy_pierwsza(a):
     pass
 
+#suma dzielników    maj 2016, z1.2 Liczby skojarzone
+def suma_dzielników(a):
+    suma = 0
+    i = 1
+    while i*i <=a:   #i <=sqrt(a)
+        if a % i == 0: # jezeli to jest dzielnik
+            suma +=i
+            if i*i != a:
+                suma += a/i
+        i+=1
+    return suma
 
+#int -> bin 
 
+def to_bin(a):
+    bin = []
+    while a != 0:
+        if a%2 == 0:
+            bin.append("0")
+            a=a//2
+        if a%2 ==1:
+            bin.append("1")
+            a=a//2
+    bin.reverse()
+    return "".join(bin)
+print(to_bin(12))
 
-
+        
