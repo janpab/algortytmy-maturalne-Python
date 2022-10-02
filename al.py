@@ -6,18 +6,19 @@ def nwd(a,b):
         elif b > a:
             b = b - a
     return a
-# najwyższa wspólna wielokrotność
 
+# najwyższa wspólna wielokrotność
 def nww(a, b):
     return (a * b)/nwd(a,b)
-# palidrom, wyraz czytany od tyłu jest taki sam
 
+# palidrom, wyraz czytany od tyłu jest taki sam
 def is_palindrom(a):
     b = "".join(reversed(a))
     if a == b:
         return True
     else:
         return False
+
 #anagram - wyraz czytany od tyłu taki sam
 def is_anagram(a,b):
     if sorted(a) == sorted(b):
@@ -25,11 +26,13 @@ def is_anagram(a,b):
     else:
         return False
 
+#silnia (rekurencyjna)
 def silnia(a):
     if a == 0:
         return 1
     else:
         return a * silnia(a-1)
+
 #od 0 = 0, 1 = 1, suma 2 poprzednich wyrazów ciągu 
 def fib(a):
     if a == 0:
@@ -41,7 +44,6 @@ def fib(a):
 
 #liczba doskonała to liczba ktora jest sumą wszystkkich swouch dzielników właściwych
 from math import sqrt
-from re import I
 def liczba_doskonala(a):
     suma = 0
     for i in range(1, int(sqrt(a))+1):
@@ -62,6 +64,8 @@ def czy_pierwsza(a):
         if a % i == 0:
             return False
     return True 
+
+
 def dzielniki(a):
     pass
 
@@ -205,6 +209,156 @@ def czy_podziel_przez_trzy(a):
         return True
     else:
         return False
+
+#czy liczba "a " występuje w tablicy "tab"
+#złożoność liniowa 
+def is_in_tab(a,tab):
+    for i in range(len(tab)):
+        if tab[i] == a:
+            return I
+    return -1  
+
+#przeszukiwanie binarne
+#
+def przesz_bin(a,tab):
+    idx_l=0
+    idx_r=len(tab)-1
+
+    while True:
+        idx = (idx_l+idx_r)//2
+        if tab[idx]==a:
+            return idx
+        if tab[idx]<a:
+            idx_l = idx+1
+        if tab[idx]>a:
+            idx_r = idx-1
+        if idx_r < idx_l:
+            return -1
+#sortowanie bąbelkowe
+
+def sort_bab(tab):
+    for i in range(len(tab)):
+        for k in range(len(tab)-1):
+            if tab[k] > tab[k+1]:
+                tmp = tab[k+1]
+                tab[k+1] = tab[k]
+                tab[k] = tmp
+    return tab
+
+def sort_bab_2(tab):
+    for i in range(len(tab)):
+        for k in range(len(tab)-1-i):
+            if tab[k] > tab[k+1]:
+                tmp = tab[k+1]
+                tab[k+1]= tab[k]
+                tab[k] = tmp
+    return tab
+
+#sortowanie przez wstawianie
+#https://binarnie.pl/sortowanieprzezwstawianiealgorytmimplementacjacpp/
+
+#a = [5,   3,1,2,4]
+# a = [3,5,   1,2,4]
+# a = [1,3,5,   2,4]
+# a = [1,2,3,5,   4]
+# a = [1,2,3,4,5   ]
+
+def insert_sort(tab):
+    for i in range(len(tab)-1):
+        #wyszukiewanie liniowe
+        for k in range(i+1):
+            if tab[k]>tab[i+1]:
+                idx = k
+                num = tab[i+1]
+                break
+        for j in range(i,k-1,-1):
+            tab[j+1] = tab[j]
+        tab[idx] = num
+    return tab
+
+#sortowanie binarne
+def sort_bin(tab):
+    for i in range(len(tab)-1):
+        num = tab[i+1]
+        idx_l = 0
+        idx_r = i
+        while True:
+            idx = (idx_l+idx_r)//2
+            if tab[idx] == num:
+                break
+            if tab[idx] <num:
+                idx_l = idx+1
+            if tab[idx]>num:
+                idx_r=idx-1
+            if idx_r < idx_l:
+                idx = idx_l
+                break
+        for j in range(i,idx-1,-1):
+            tab[j+1] = tab[j]
+        tab[idx] = num
+        print(tab,"sort bin")
+
+# sortowanie przez wyszukiwanie
+#https://pl.wikipedia.org/wiki/Sortowanie_przez_wybieranie
+
+def select_sort(tab):
+    for i in range(len(tab)):
+        min = tab[i]
+        idx = i #najmniejszy
+        for k in range(i,len(tab)):
+            if tab[k] < min:
+                min = tab[k]
+                idx = k
+        for j in range(idx,i,-1):
+            tab[j] = tab[j-1]
+        tab[i] = min
+    print(tab, "sort wyszuk")
+
+#sortowanie kubełkowe
+#https://binarnie.pl/sortowanie-kubelkowe/
+
+def bucket_sort(tab, max_):
+    lista = [[] for k in range(len(tab))] 
+    rozmiar = max_/len(tab)  
+    for i in range(len(tab)):
+        idx = int(tab[i]//rozmiar)
+        lista[idx].append(tab[i])
+    lista_sorted= []
+    for k in range(len(lista)):
+        if len(lista[k])==1:
+            lista_sorted.append(lista[k][0])
+        if len(lista[k])>1:
+            for j in range(len(lista[k])):
+                min = lista[k][0]
+                idx = 0 
+                for l in range(len(lista[k])):
+                    if lista[k][l]<min:
+                        min = lista[k][l]
+                        idx = l
+                del lista[k][idx]
+                lista_sorted.append(min)
+    print(lista_sorted)
+#sortowanie przez scalanie
+def scal(a,b):
+    idx_a = 0
+    idx_b = 0
+    sorted = []
+    while True:
+        if idx_a > len(a) - 1:
+            for k in range(idx_b, len(b)):
+                sorted.append(b[k])
+            break
+        if idx_b>len(b)-1:
+            for k in range(idx_a,len(a)):
+                sorted.append(a[k])
+            break
+        if a[idx_a]>b[idx_b]:
+            sorted.append(b[idx_b])
+            idx_b+=1
+        else:
+            sorted.append(a[idx_a])
+            idx_a+=1
+    print(sorted)
 
 # all() - wszytskie są prawdziwe
 # any() - co najmniej jedna jest True
