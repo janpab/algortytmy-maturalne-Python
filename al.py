@@ -215,7 +215,7 @@ def czy_podziel_przez_trzy(a):
 def is_in_tab(a,tab):
     for i in range(len(tab)):
         if tab[i] == a:
-            return I
+            return i
     return -1  
 
 #przeszukiwanie binarne
