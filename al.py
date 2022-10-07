@@ -359,6 +359,18 @@ def scal(a,b):
             sorted.append(a[idx_a])
             idx_a+=1
     print(sorted)
+# scalanie danych elementów w środku tablicy
+
+def scal2(tab, idx_l, idx_m, idx_r):
+
+    lista1 = tab[idx_l:idx_m+1]
+    lista2 = tab[idx_m+1:idx_r+1]
+    idx_1 = 0
+    idx_2 = 0
+    idx_s = idx_l
+
+
+
 
 # all() - wszytskie są prawdziwe
 # any() - co najmniej jedna jest True
