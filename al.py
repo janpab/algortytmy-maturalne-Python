@@ -368,7 +368,100 @@ def scal2(tab, idx_l, idx_m, idx_r):
     idx_1 = 0
     idx_2 = 0
     idx_s = idx_l
+# sortowanie przez scalanie iteracyjnie
+# rozmiar tablicy = 2**N
+a= [1, 6   ,8, 4,    2, 5,    8, 0]
+# [1,6 ,4,8, 2,5, 0,8] # scalanie
 
+# [1,6 ,4,8,     2,5, 0,8] 
+# [1,4,6,8,      0,2,5,8] # scalenie
+
+# [0,1,2,4,5,6,8]
+
+
+
+def scal_iter(tab):
+    n = 2
+    while n <= len(tab):
+        for i in range(0,len(tab)-1,n):
+            #tablica = tab[i:i+1]
+            #idx_tab = i
+            idx_l = i
+            idx_r = i+n-1
+            idx_m = (idx_l+idx_r)//2
+            scal1(tab, idx_l, idx_m, idx_r)
+            
+        n *= 2
+    print(tab,'scal iter')
+scal_iter(a)
+
+# sortowanie szybkie - quicksort
+'''
+pivot = 5
+[5,6,4,5,2,7,9]
+ i       j
+tab[i] >= pivot     pivot <= tab[j]
+
+[2,6,4,5,5,7,9]
+   i   j
+
+[2,5,4,6,5,7,9]
+     j i
+
+'''
+def quicksort(tab, idx_l=0, idx_r=None):
+    if idx_r is None:
+        idx_r = len(tab) - 1
+    
+    if idx_r <= idx_l:    #warunek zakończenia - jednoelementowa tablica
+        return 
+
+    pivot = tab[(idx_r+idx_l)//2]
+    i = idx_l
+    j = idx_r
+    while j>i:
+        while tab[i]<pivot:##
+            i += 1
+        while tab[j]>pivot:
+            j-=1
+        if j>=i:
+            # zamieniamy miejscami elementy
+            tmp = tab[j]
+            tab[j] = tab[i]
+            tab[i] = tmp
+            i+=1
+            j-=1
+    quicksort(tab, idx_l, j)   
+    quicksort(tab, i, idx_r)
+
+a= [1, 6   ,8, 4,    2, 5,    8, 0]
+
+quicksort(a)
+print(a)
+
+
+
+
+#POŁOWIENIE PRZEDZIAŁU/ BISEKCJA
+# https://pl.wikipedia.org/wiki/Metoda_r%C3%B3wnego_podzia%C5%82u#/media/Plik:Bisection_method.png
+
+# y = x*x - 2   [0, 2]
+def f(x):
+    return x-2 
+    
+# a * (10 ** b) ->  aeb
+# 20000 -> 2e4
+# 0.0005 -> 5e-4
+def bisekcja(f, a, b, epsilon=1e-10):  # a < b
+    while b-a>=epsilon:
+        m = (a+b)/2
+        if f(a)*f(m) < 0:#różnych znakow
+            b = m
+        else:
+            a = m
+        
+    return (a+b)/2
+print(bisekcja(f,0,3))
 
 
 
