@@ -389,11 +389,11 @@ def scal_iter(tab):
             idx_l = i
             idx_r = i+n-1
             idx_m = (idx_l+idx_r)//2
-            scal1(tab, idx_l, idx_m, idx_r)
+            scal(tab, idx_l, idx_m, idx_r)
             
         n *= 2
     print(tab,'scal iter')
-scal_iter(a)
+# scal_iter(a)
 
 # sortowanie szybkie - quicksort
 '''
@@ -463,6 +463,64 @@ def bisekcja(f, a, b, epsilon=1e-10):  # a < b
     return (a+b)/2
 print(bisekcja(f,0,3))
 
+#SZYFROWOWANIE#
+#Szyfr Cezara
+#ord('a') => kod ascii
+#chr(kod_ascii) => litera
+
+def szyfruje(a,k):
+    szyfr = []
+    for ch in a:
+        if ord(ch) + k > ord('z'):
+            b = ord(ch)+k - (ord('z')-ord('a')+1)
+        else:
+            b = ord(ch)  + k 
+        szyfr.append(chr(b))
+    return "".join(szyfr)
+
+def deszyfruje(a,k):
+    tekst = []
+    for ch in a:
+        if ord(ch) -k < ord('a'):
+            b = ord(ch)-k + (ord('z')-ord('a')+1)
+        else:
+            b = ord(ch) -k 
+        tekst.append(chr(b))
+    return "".join(tekst)
+print(deszyfruje("rtqitco",2))
+
+# szyfr permutacyjny
+alfabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+klucz = 'YPDARFBLWQETZGSVIMKHNXJUOC'    # dowolna permutacja alfabetu
+
+def permutacja_szyfruje(klucz,wyraz):
+    a = {}
+    wyraz = []
+    for i in range(len(alfabet)):
+        a [ alfabet[i]] = klucz[i]
+    for el in wyraz:
+        wyraz.append(a[el])
+    return "".join(wyraz)
+
+def permutacja_deszyfruje(klucz,wyraz):
+    a = {}
+    b = []
+    for i in range(len(alfabet)):
+        a[klucz[i]]=alfabet[i]
+    for el in wyraz:
+        b.append(a[el])
+    return "".join(b)
+#SZFR PRZESTAWIENIOWY
+
+#PROGRAM
+
+def szyfr_przestawieniowy(wyraz):
+    a = [] 
+    for i in range(0, len(wyraz),2):
+        if i < len(wyraz)-1:
+            a.append(wyraz[i+1])
+        a.append(wyraz[i])
+    return "".join(a)
 
 
 # all() - wszytskie są prawdziwe
