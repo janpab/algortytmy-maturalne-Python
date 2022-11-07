@@ -19,7 +19,7 @@ def is_palindrom(a):
     else:
         return False
 
-#anagram - wyraz czytany od tyłu taki sam
+#anagram - wyraz ułożony z tych samych liter
 def is_anagram(a,b):
     if sorted(a) == sorted(b):
         return True
